@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "google-calendar-events"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "google_calendar_events"}]
+
+[tool.poetry.dependencies]
+python = "3.8.10"
+google-api-python-client = "^2.118.0"
+google-auth-httplib2 = "^0.2.0"
+google-auth-oauthlib = "^1.2.0"
+google-auth = "^2.28.1"
+pydantic = {extras = ["email"], version = "^2.6.4"}
+psycopg2 = "^2.9.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
