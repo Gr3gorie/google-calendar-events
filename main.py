@@ -36,15 +36,24 @@ def parse_datetime(dt_str):
 
 
 def fetch_events(calendar_id='primary', time_min=None, time_max=None, max_results=2500):
-    events_result = service.events().list(
-        calendarId=calendar_id,
-        timeMin=time_min,
-        timeMax=time_max,
-        maxResults=max_results,
-        singleEvents=True,
-        orderBy='startTime'
-    ).execute()
-    return events_result.get('items', [])
+    all_events = []
+    page_token = None
+    while True:
+        events_result = service.events().list(
+            calendarId=calendar_id,
+            timeMin=time_min,
+            timeMax=time_max,
+            maxResults=max_results,
+            page_token=page_token,
+            singleEvents=True,
+            orderBy='startTime'
+        ).execute()
+        all_events.extend(events_result.get('items', []))
+
+        page_token = events_result.get('nextPageToken')
+        if not page_token:
+            break
+    return all_events
 
 
 def process_events(raw_events):
