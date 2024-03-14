@@ -44,7 +44,7 @@ def fetch_events(calendar_id='primary', time_min=None, time_max=None, max_result
             timeMin=time_min,
             timeMax=time_max,
             maxResults=max_results,
-            page_token=page_token,
+            pageToken=page_token,
             singleEvents=True,
             orderBy='startTime'
         ).execute()
