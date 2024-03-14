@@ -12,9 +12,6 @@ credentials = service_account.Credentials.from_service_account_file(
 service = build('calendar', 'v3', credentials=credentials)
 
 
-# Define a time range
-
-
 class Event(BaseModel):
     id: str
     title: str
@@ -53,8 +50,6 @@ def fetch_events(calendar_id='primary', time_min=None, time_max=None, max_result
 def process_events(raw_events):
     processed_events = []
     for event in raw_events:
-        # Extract and transform event data here
-        # Validate event data against your Pydantic models (Event and Attendee)
         event_data = {
             "id": event["id"],
             "title": event.get("summary", "No Title"),
@@ -130,7 +125,6 @@ def insert_into_postgres(conn, processed_events):
                         (attendee_obj.event_id, attendee_obj.email)
                         )
 
-    # Commit transactions and close cursor
     conn.commit()
     cur.close()
 
@@ -146,7 +140,7 @@ def main():
 
     print("Fetching data from Google Calendar...")
     time_min = datetime(2022, 3, 1).isoformat() + 'Z'
-    time_max = datetime(2025, 1, 1).isoformat() + 'Z'
+    time_max = datetime(2099, 12, 31).isoformat() + 'Z'
     raw_events = fetch_events('galina.skripka@dataacquisition.ru', time_min, time_max)
     processed_events = process_events(raw_events)
 
