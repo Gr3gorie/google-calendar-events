@@ -1,7 +1,7 @@
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from pydantic import BaseModel, EmailStr, field_validator
-from datetime import datetime
+from datetime import datetime, timedelta
 import psycopg2
 import os
 
@@ -149,7 +149,7 @@ def main():
 
     print("Fetching data from Google Calendar...")
     time_min = datetime(2022, 3, 1).isoformat() + 'Z'
-    time_max = datetime(2099, 12, 31).isoformat() + 'Z'
+    time_max = (datetime.utcnow()+timedelta(weeks=1)).isoformat() + 'Z'
     raw_events = fetch_events('galina.skripka@dataacquisition.ru', time_min, time_max)
     processed_events = process_events(raw_events)
 
