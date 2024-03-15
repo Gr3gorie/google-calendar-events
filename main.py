@@ -97,9 +97,10 @@ def make_migrations(conn):
     cur.execute("""
             CREATE TABLE IF NOT EXISTS attendees (
                 attendee_id SERIAL PRIMARY KEY,
-                event_id VARCHAR,
+                event_id VARCHAR NOT NULL,
                 email VARCHAR,
                 FOREIGN KEY (event_id) REFERENCES events(event_id)
+                CONSTRAINT unique_event_attendee UNIQUE (event_id, email)
             );
         """)
 
