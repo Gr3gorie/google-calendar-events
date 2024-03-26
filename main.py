@@ -150,7 +150,7 @@ def main():
 
     print("Fetching data from Google Calendar...")
     time_min = datetime(2022, 3, 1).isoformat() + 'Z'
-    time_max = (datetime.utcnow()+timedelta(weeks=1)).isoformat() + 'Z'
+    time_max = (datetime.utcnow()).isoformat() + 'Z'
     raw_events = fetch_events('galina.skripka@dataacquisition.ru', time_min, time_max)
     processed_events = process_events(raw_events)
 
