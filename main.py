@@ -1,7 +1,7 @@
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from pydantic import BaseModel, EmailStr, field_validator
-from datetime import datetime, timedelta
+from datetime import datetime
 import psycopg2
 import os
 
@@ -66,7 +66,7 @@ def process_events(raw_events):
             "endtime": event["end"].get("dateTime") or event["end"].get("date"),
             "updated": event["updated"],
             "status": event.get("status", "No Status"),
-            "organizer": event["organizer"].get("email", "No Organizer"),
+            "organizer": event.get("organizer", {}).get("email", "No Organizer"),
         }
         event_obj = Event(**event_data)
 
